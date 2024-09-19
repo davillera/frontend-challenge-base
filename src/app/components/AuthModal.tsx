@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,15 +14,11 @@ const AuthModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
-      {/* Fondo con blur */}
       <div
         className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-md"
         onClick={onClose}
       ></div>
-      {/* Contenido del modal */}
       <div className="relative flex w-5/6 h-5/6 bg-darkgray rounded-lg shadow-lg">
-        {/* Sección derecha con fondo sólido e imagen */}
-
         <div className="w-1/2 p-6 bg-gray rounded-r-lg">
           <button onClick={onClose} className="text-white text-2xl mb-4 left-0">
             &times;
@@ -41,7 +36,6 @@ const AuthModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             >
               Log In
             </button>
-            {/*<Image></Image>*/}
           </div>
           {isLogin ? (
             <div>

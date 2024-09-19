@@ -3,14 +3,12 @@
 import { useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
-import colors from "tailwindcss/colors";
 import AuthModal from "@/app/components/AuthModal";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalToggle = () => {
-    console.log('click');
     setShowModal(!showModal);
   };
 
