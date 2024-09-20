@@ -7,8 +7,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const BACKEND = process.env.NEXT_PUBLIC_URL_BACKEND;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-const accessToken = sessionStorage.getItem("accessToken") || null;
-const userId = sessionStorage.getItem("userId") || null;
+const accessToken = sessionStorage.getItem("accessToken") || "";
+const userId = sessionStorage.getItem("userId") || "";
 
 const FavoritesPage = () => {
   const [favoritesId, setFavoritesId] = useState<number[]>([]);
