@@ -99,9 +99,7 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
               </div>
             </Link>
           </div>
-        ))} : (
-          <p className="text-white">Películas No disponibles</p>
-          )
+        ))}
       </div>
       {hasMore && (
         <div className="flex justify-center mt-4">
