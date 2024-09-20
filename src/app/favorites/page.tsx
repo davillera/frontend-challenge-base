@@ -15,13 +15,7 @@ const FavoritesPage = () => {
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken") || "";
-
-    let userId: string;
-    if (!accessToken) {
-      router.push("/");
-    } else {
-      userId = sessionStorage.getItem("userId") || "";
-    }
+    const userId = sessionStorage.getItem("userId") || "";
 
     const getFavoritesMoviesId = async () => {
       try {
