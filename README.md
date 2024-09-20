@@ -13,6 +13,12 @@ pnpm dev
 # or
 bun dev
 ```
+## Variables de Entorno
+```bash
+NEXT_PUBLIC_API_URL=https://api.themoviedb.org/3
+NEXT_PUBLIC_URL_BACKEND=
+NEXT_PUBLIC_API_KEY=
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
