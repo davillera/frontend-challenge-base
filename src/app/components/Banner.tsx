@@ -15,10 +15,7 @@ const Banner: React.FC<BannerProps> = ({
                                          backgroundImage,
                                          vote_average,
                                        }) => {
-  // Estado para marcar como favorito
   const [isFavorite, setIsFavorite] = useState(false);
-
-  // Función para calcular el porcentaje del voto
   const votePercentage = (vote_average / 10) * 100;
 
   return (

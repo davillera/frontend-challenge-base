@@ -36,10 +36,12 @@ const AuthModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       }
 
       const data = await response.json();
-      console.log("Success:", data);
+      sessionStorage.setItem("accessToken", data.accessToken);
+      sessionStorage.setItem("userId", data.userId );
       onClose();
     } catch (err: any) {
       setError(err.message || "An error occurred");
+      alert("Ocurrió un Error en la Autenticación")
     } finally {
       setLoading(false);
     }

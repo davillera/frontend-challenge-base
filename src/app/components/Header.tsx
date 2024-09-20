@@ -24,7 +24,7 @@ const Header = () => {
             className="w-60 h-auto"
           />
         </Link>
-        <Link href="/popular">
+        <Link href="/">
           <p className="hover:underline">Popular</p>
         </Link>
         <Link href="/favorites">
@@ -42,11 +42,9 @@ const Header = () => {
               stroke="currentColor" strokeWidth="1.5" />
           </svg>
         </button>
-
       </div>
       {showModal && <AuthModal isOpen={showModal} onClose={handleModalToggle} />}
     </header>
-
   );
 };
 

@@ -5,17 +5,26 @@ import Header from '@/app/components/Header';
 import Banner from '@/app/components/Banner';
 import Search from '@/app/components/Search';
 
+import MovieSearchContainer from "@/app/components/MovieSearchContainer";
+
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 async function getMovieNow() {
-  const res = await fetch(`${API_URL}/now_playing?api_key=${API_KEY}`);
-  const data = await res.json();
-  return data.results ? data.results[0] : null;
+  try {
+    const res = await fetch(`${API_URL}/movie/now_playing?api_key=${API_KEY}`);
+    if (!res.ok) throw new Error("Error fetching movies");
+    const data = await res.json();
+    return data.results ? data.results[0] : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 async function getAllMovies() {
-  const res = await fetch(`${API_URL}/popular?api_key=${API_KEY}`);
+  const res = await fetch(`${API_URL}/movie/popular?api_key=${API_KEY}`);
   const data = await res.json();
   return data.results;
 }
@@ -26,6 +35,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+
   const movieNow = await getMovieNow();
   const initialMovies = await getAllMovies();
 
@@ -33,19 +43,14 @@ export default async function Home() {
     <RootLayout>
       <Header />
       <Banner
-        title={movieNow.title}
-        description={movieNow.overview}
-        backgroundImage={`https://image.tmdb.org/t/p/original/${movieNow.backdrop_path}`}
-        vote_average={movieNow.vote_average}
+        title={movieNow?.title || "No disponible"}
+        description={movieNow?.overview || "No hay descripción disponible"}
+        backgroundImage={movieNow ? `https://image.tmdb.org/t/p/original/${movieNow.backdrop_path}` : '/default-image.jpg'}
+        vote_average={movieNow?.vote_average || 0}
       />
-      <div className="flex">
-        <div className="w-1/4">
-          <Search />
-        </div>
-        <div className="w-3/4">
-          <Movies initialMovies={initialMovies} />
-        </div>
-      </div>
+      <MovieSearchContainer
+        initialMovies={initialMovies}
+      />
     </RootLayout>
   );
 }
