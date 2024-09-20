@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React, { useState, useCallback } from "react";
 
@@ -41,7 +43,7 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
         setPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
-      alert("Error al obtener las nuevas películas");
+      alert("error al obtener las nuevas películas")
     } finally {
       setLoading(false);
     }
@@ -68,7 +70,7 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
       if (!response.ok) throw new Error("Failed to add to favorites");
 
       await response.json();
-      alert("Película añadida con éxito a Favoritos");
+      alert("Pelicula añadida con éxito a Favoritos");
     } catch (error) {
       alert("Error al añadir la película");
       console.error("Error adding to favorites:", error);
@@ -79,29 +81,27 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
     <div className="bg-lightgray">
       <h1 className="font-bold text-xl">Popular</h1>
       <div className="grid grid-cols-4 gap-4 p-8 overflow-auto">
-        {movies.length > 0 ? (
-          movies.map((movie) => (
-            <div key={movie.id} className="pb-4 rounded-lg w-full bg-gray">
-              <Link href={`/movies/${movie.id}`} className="block">
-                <img
-                  className="w-full h-64 object-cover rounded-md"
-                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <div className="m-4">
-                  <h3 className="text-xl font-bold text-white">{movie.title}</h3>
-                  <p className="text-white">{movie.release_date}</p>
-                  <div className="flex items-center space-x-4 p-2">
-                    <p className="text-white">Rating: {Math.round(movie.vote_average * 10)}%</p>
-                    <button onClick={() => getFavoritesIds(movie.id)}>❤️</button>
-                  </div>
+        {(searchResults && searchResults.length > 0 ? searchResults : movies).map((movie) => (
+          <div key={movie.id} className="pb-4 rounded-lg w-full bg-gray">
+            <Link href={`/movies/${movie.id}`} className="block">
+              <img
+                className="w-full h-64 object-cover rounded-md"
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                alt={movie.title}
+              />
+              <div className="m-4">
+                <h3 className="text-xl font-bold text-white">{movie.title}</h3>
+                <p className="text-white">{movie.release_date}</p>
+                <div className="flex items-center space-x-4 p-2">
+                  <p className="text-white">Rating: {Math.round(movie.vote_average * 10)}%</p>
+                  <button onClick={() => getFavoritesIds(movie.id)}>❤️</button>
                 </div>
-              </Link>
-            </div>
-          ))
-        ) : (
+              </div>
+            </Link>
+          </div>
+        ))} : (
           <p className="text-white">Películas No disponibles</p>
-        )}
+          )
       </div>
       {hasMore && (
         <div className="flex justify-center mt-4">
@@ -116,6 +116,7 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
       )}
     </div>
   );
+
 };
 
 export default Movies;

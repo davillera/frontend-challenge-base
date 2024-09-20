@@ -1,5 +1,3 @@
-// app/movies/[id]/page.tsx
-
 import React from 'react';
 import Link from "next/link";
 
@@ -48,5 +46,13 @@ const MovieDetail = async ({ params }) => {
   );
 };
 
+export async function generateStaticParams() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}`);
+  const data = await res.json();
+
+  return data.results.map(movie => ({
+    id: movie.id.toString(),
+  }));
+}
 
 export default MovieDetail;
