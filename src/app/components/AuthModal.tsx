@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 const BACKEND_URL = process.env.NEXT_PUBLIC_URL_BACKEND;
 
 interface ModalProps {
@@ -109,6 +110,13 @@ const AuthModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             Ready to unlock a universe of cinematic delights? Sign up now and
             start your journey with us!
           </p>
+          <Image
+            src="./images/characterup.png"
+            alt="Logo"
+            width={164}
+            height={42}
+            className="w-98 h-auto"
+          />
         </div>
       </div>
     </div>
