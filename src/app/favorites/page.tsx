@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { router } from "next/client";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const BACKEND = process.env.NEXT_PUBLIC_URL_BACKEND;
@@ -14,7 +15,13 @@ const FavoritesPage = () => {
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken") || "";
-    const userId = sessionStorage.getItem("userId") || "";
+
+    let userId: string;
+    if (!accessToken) {
+      router.push("/");
+    } else {
+      userId = sessionStorage.getItem("userId") || "";
+    }
 
     const getFavoritesMoviesId = async () => {
       try {

@@ -98,6 +98,7 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
                 src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                 alt={movie.title}
               />
+            </Link>
               <div className="m-4">
                 <h3 className="text-xl font-bold text-white">{movie.title}</h3>
                 <p className="text-white">{movie.release_date}</p>
@@ -106,7 +107,6 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
                   <button onClick={() => getFavoritesIds(movie.id)}>❤️</button>
                 </div>
               </div>
-            </Link>
           </div>
         ))}
       </div>
