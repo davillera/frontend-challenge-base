@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -7,14 +6,16 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const BACKEND = process.env.NEXT_PUBLIC_URL_BACKEND;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-const accessToken = sessionStorage.getItem("accessToken") || "";
-const userId = sessionStorage.getItem("userId") || "";
+
 
 const FavoritesPage = () => {
   const [favoritesId, setFavoritesId] = useState<number[]>([]);
   const [favorites, setFavorites] = useState<any[]>([]);
 
   useEffect(() => {
+    const accessToken = sessionStorage.getItem("accessToken") || "";
+    const userId = sessionStorage.getItem("userId") || "";
+
     const getFavoritesMoviesId = async () => {
       try {
         const response = await fetch(`${BACKEND}/favorites?userId=${userId}`, {
@@ -38,6 +39,8 @@ const FavoritesPage = () => {
   }, []);
 
   useEffect(() => {
+    const accessToken = sessionStorage.getItem("accessToken") || "";
+
     const getFavoriteMoviesDetails = async () => {
       const movieDetailsPromises = favoritesId.map(async (id) => {
         try {
@@ -66,6 +69,9 @@ const FavoritesPage = () => {
   }, [favoritesId]);
 
   const removeFavorite = async (movieId: number) => {
+    const accessToken = sessionStorage.getItem("accessToken") || "";
+    const userId = sessionStorage.getItem("userId") || "";
+
     try {
       const response = await fetch(`${BACKEND}/favorites`, {
         method: "DELETE",

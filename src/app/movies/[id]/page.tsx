@@ -49,7 +49,7 @@ const MovieDetail = async ({ params }) => {
 export async function generateStaticParams() {
   const res = await fetch(`${API_URL}/movie/popular?api_key=${API_KEY}`);
   const data = await res.json();
-  return data.results.map(movie => ({
+  return data.results.map((movie: { id: { toString: () => any; }; }) => ({
     id: movie.id.toString(),
   }));
 }

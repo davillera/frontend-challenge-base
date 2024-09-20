@@ -25,29 +25,38 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(2);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const getMoreMovies = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/movie/popular?api_key=${API_KEY}&page=${page}`);
+      const endpoint = searchQuery
+        ? `${API_URL}/search/movie?api_key=${API_KEY}&query=${searchQuery}&page=${page}`
+        : `${API_URL}/movie/popular?api_key=${API_KEY}&page=${page}`;
+
+      const response = await fetch(endpoint);
       const data = await response.json();
 
       if (!data.results || !Array.isArray(data.results)) {
-        throw new Error("Unexpected API response");
+        throw new Error("Respuesta inesperada de la API");
       }
 
       if (data.results.length === 0) {
         setHasMore(false);
       } else {
-        setMovies((prevMovies) => [...prevMovies, ...data.results]);
+        if (searchQuery) {
+          setMovies((prevMovies) => [...data.results]);
+        } else {
+          setMovies((prevMovies) => [...prevMovies, ...data.results]);
+        }
         setPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
-      alert("error al obtener las nuevas películas")
+      alert("Error al obtener las películas");
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [page, searchQuery]);
 
   const getFavoritesIds = async (movieId: number) => {
     const accessToken = sessionStorage.getItem("accessToken");
@@ -67,13 +76,13 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
         body: JSON.stringify({ movieId, userId }),
       });
 
-      if (!response.ok) throw new Error("Failed to add to favorites");
+      if (!response.ok) throw new Error("Fallo al añadir a favoritos");
 
       await response.json();
-      alert("Pelicula añadida con éxito a Favoritos");
+      alert("Película añadida a favoritos con éxito");
     } catch (error) {
-      alert("Error al añadir la película");
-      console.error("Error adding to favorites:", error);
+      alert("Error al añadir la película a favoritos");
+      console.error("Error al añadir a favoritos:", error);
     }
   };
 
@@ -114,7 +123,6 @@ const Movies: React.FC<MoviesProps> = ({ initialMovies, searchResults }) => {
       )}
     </div>
   );
-
 };
 
 export default Movies;
